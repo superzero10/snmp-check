@@ -2,7 +2,7 @@
 Simple snmp checker
 
 # Usage
-`./snmp_check [OPTION][HOST]`
+`./snmp_check [C_KEY][OPTION][HOST]`
 
 # OPTIONS
 `--local` :       test localhost snmp<br />
