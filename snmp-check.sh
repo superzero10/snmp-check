@@ -15,19 +15,31 @@ fi
 
 #start
 
-if [ $2 = "--local" ]
-then
-	snmpwalk -v 2c -c $1 -O e 127.0.0.1 | head
+if [ $2 == "--local" ]; then
+	output=`snmpwalk -v 2c -c $1 -O e 127.0.0.1 | head`
+                                if [[ $output =~ "SNMPv2-MIB::sysDescr.0" ]]; then
+                                        echo "OK"
+                                else
+                                        echo "ERROR"
+				fi
 else
-	if [ $2 = "-h" ]
-	then
-		snmpwalk -v 2c -c $1 -O e $3 | head
+	if [ $2 == "-h" ]; then
+		output=`snmpwalk -v 2c -c $1 -O e $3 | head`
+                                if [[ $output =~ "SNMPv2-MIB::sysDescr.0" ]]; then
+                                        echo "OK"
+                                else
+                                        echo "ERROR"
+				fi
 	else
-		if [ $2 = "--list" ]
-		then
+		if [ $2 == "--list" ]; then
 			while read host; do
 				echo $host
-				snmpwalk -v 2c -c $1 -O e $host | head
+				output=`snmpwalk -v 2c -c $1 -O e $host | head`
+				if [[ $output =~ "SNMPv2-MIB::sysDescr.0" ]]; then
+					echo "OK"
+				else
+					echo "ERROR"
+				fi
 			done < $3
 		else
 			echo "error" 1>&2
